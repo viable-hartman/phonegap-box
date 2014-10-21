@@ -5,6 +5,7 @@ apt-get -y update
 apt-get -y install unzip
 apt-get -y install git
 apt-get -y install vim
+apt-get -y install ubuntu-desktop
 
 apt-get -y install python-software-properties python g++ make
 add-apt-repository ppa:chris-lea/node.js

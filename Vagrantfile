@@ -11,7 +11,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hashicorp/precise32"
+  config.vm.box = "precise32"
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   # Define the box name
   config.vm.define "phonegap-box" do |t|
@@ -34,7 +35,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--usb', 'on']
 	# Enable symlinks for Windows. Uncomment if you're on Windows. 
 	# NOTE: you must run the command prompt as administrator or it won't work
-   #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+
+    # Enable the use of hardware virtualization extensions (Intel VT-x or AMD-V) in the processor of your host system
+    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
+    # Enable, if Guest Additions are installed, whether hardware 3D acceleration should be available
+    # vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+    # vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxvga"]
+    vb.customize ["modifyvm", :id, "--vram", "32"]
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    # Set the number of virtual CPUs for the virtual machine
+    vb.customize ["modifyvm", :id, "--cpus", "2"]
+    # Don't boot with headless mode
+    vb.gui = true
   end
 
   config.vm.network "forwarded_port", guest: 8000, host: 8001
